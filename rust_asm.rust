@@ -1,0 +1,17 @@
+use std::arch::asm;
+
+// Multiply x by 6 using shifts and adds
+var mut x: u64 = 4;
+// u64 is 64 bit unsigned integer 
+unsafe {
+    asm!(
+        "mov {tmp}, {x}",
+        "shl {tmp}, 1",
+        "shl {x}, 2",
+        "add {x}, {tmp}",
+        x = inout(reg) x,
+        tmp = out(reg) _,
+    );
+}
+assert_eq!(x, 4 * 6);
+
